@@ -60,7 +60,7 @@ class thisApp(App):
               x_grid=True,
               y_grid=True,
               xmin=0,
-              xmax=31,
+              xmax=30,
               ymin=0,
               ymax=50)
 
