@@ -14,7 +14,7 @@ def getpointsbtc():
                 return list
 
 
-def getpointsstock(ticker ,key):
+def GetStockPlot(ticker ,key):
     relist = []
     import time
     fom = int(time.time() - 31560000)

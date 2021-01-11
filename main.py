@@ -1,45 +1,97 @@
-import requests
-import sys
+from kivy.uix.boxlayout import BoxLayout
 
 from kivy.uix.label import Label
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.pagelayout import PageLayout
 from kivy.uix.image import Image
 from kivy.clock import Clock
-from kivy_garden.graph import Graph, LinePlot
+from kivy_garden.graph import Graph, SmoothLinePlot,
 from kivy.core.window import Window
-
+from kivy.lang import Builder
 import jsonhelper
 
 
+Builder.load_string("""
+<MyImage>:
+    bcolor: 0, 0, 0, 1
+    canvas.before:
+        Color:
+            rgba: root.bcolor
+        Rectangle:
+            size: self.size
+            pos: self.pos
+""")
+Builder.load_string("""
+<MyBox>:
+    bcolor: 0, 0, 0, 1
+    canvas.before:
+        Color:
+            rgba: root.bcolor
+        Rectangle:
+            size: self.size
+            pos: self.pos
+""")
+
+class MyBox(BoxLayout):
+    pass
+class MyImage(Image):
+    pass
 
 class Myapp(App):
 
     #App Entry Point
     def build(self):
-        #self.CurrentPrice = 0
-        #init stuff
+
+
+        #for fullscreen use
         Window.fullscreen = 'auto'
+
+        #for window use
+        #Window.borderless = '0'
+        Window.size = (1920,1080)
+        Window.clearcolor = (0.1,0.1,0.1,1)
         #layout setup
-        linegraph = linechart()
-        layout = BoxLayout(orientation="vertical")
-        #upper layout
-        upperLayout = BoxLayout(orientation="horizontal")
 
-        upperLayout.add_widget(Label(text=str(round(linegraph.CurrentPrice, 2)), font_size='200sp'))
-        upperLayout.add_widget(Image(source='IBM.svg.png'))
-        #lower layout
-        layout.add_widget(upperLayout)
-        layout.add_widget(linegraph.get_points())
+        pageslay = PageLayout(border="20")
+
+        Page1 = GraphPage('IBM')
+        Page2 = GraphPage('AAPL')
+
+        pageslay.add_widget(Page1.getWidget())
+        pageslay.add_widget(Page2.getWidget())
+
+        return pageslay
 
 
-        return layout
+class GraphPage():
+    def __init__(self, ticker):
+
+
+        chart = linechart(ticker)
+
+        self.Page = MyBox(orientation="vertical")
+
+        #Upper Layout
+        upperLayout = MyBox(orientation="horizontal")
+        upperLayout.add_widget(Label(text=f'Current Quote:\n {str(round(chart.CurrentPrice, 2))}', font_size='100sp'))
+        try:
+            upperLayout.add_widget(MyImage(source=f'{ticker}.png'))
+        except:
+            upperLayout.add_widget(MyImage(source=f'NA.png'))
+        #Lower Layout
+        self.Page.add_widget(upperLayout)
+        self.Page.add_widget(chart.Get_graph())
+
+    def getWidget(self):
+        return self.Page
 
 
 class linechart():
-    def __init__(self):
+    def __init__(self, ticker):
         self.CurrentPrice = 0
-        self.graph = Graph(
+        self.ticker = ticker
+        self.chart = Graph(
             xlabel='Time',
             ylabel='Price',
             x_ticks_minor=0,
@@ -53,43 +105,34 @@ class linechart():
             xmin=0,
             xmax=51,
             ymin=0,
-            
             )
 
 
-        self.plot = LinePlot(color=[1, 0, 0, 1],line_width=2)
+        self.plot = SmoothLinePlot(color=[1, 1, 1, 1])
         self.plot.points = self.getPointsFromApi()
-        self.graph.add_plot(self.plot)
-
-        self.i = 0
-        self.cnt = 100
-        self.MYLIST = []
+        self.chart.add_plot(self.plot)
 
 
         Clock.schedule_interval(self.update_points, 1/60.)
+        Clock.schedule_interval(self.getPointsFromApi, 30)
 
 
-
-
-
-
-
-    def update_points(self, *args):
+    def update_points(self):
         self.plot.points = self.plots
 
 
     def getPointsFromApi(self):
-        data = jsonhelper.getpointsstock('AAPL', 'bvtss4748v6pijnevmqg')
+        data = jsonhelper.GetStockPlot(self.ticker, 'bvtss4748v6pijnevmqg')
         #sizing graph adding upper buffer
         #TODO Make buffer round
-        self.graph.ymax = data['ymax']+data['ymax']/4
+        Graph.ymax = data['ymax']+data['ymax']/4
         self.plots = data['plot']
         self.CurrentPrice = data['CurrentPrice']
         return data['plot']
 
 
-    def get_points(self):
-        return self.graph
+    def Get_graph(self):
+        return self.chart
 
 
 Myapp().run()
