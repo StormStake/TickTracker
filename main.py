@@ -1,11 +1,11 @@
 import requests
 import sys
-import kivy
-from math import sin
+
+
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.clock import Clock
-
+import jsonhelper
 from kivy_garden.graph import Graph, MeshLinePlot
 
 def get_price_btc():
@@ -36,7 +36,7 @@ class thisApp(App):
         self.cnt
         #graph.xmin = 0
         #graph.xmax = cnt
-        
+
 
     def update_points(self, *args):
         self.i
@@ -46,8 +46,9 @@ class thisApp(App):
         self.plot.points = self.getPointsFromApi()
 
     def getPointsFromApi(self):
-        requests.get('https://api.coindesk.com/v1/bpi/historical/close.json').text
-        
+        return jsonhelper.getpoints()
+
+
     def build(self):
         #init stuff
         self.graph = Graph(xlabel='Time', ylabel='Price', x_ticks_minor=0,
@@ -62,12 +63,16 @@ class thisApp(App):
               xmax=31,
               ymin=0,
               ymax=50)
+
+
         self.plot = MeshLinePlot(color=[1, 0, 0, 1])
         self.plot.points = self.getPointsFromApi()
         self.graph.add_plot(self.plot)
+
         self.i = 0
         self.cnt = 100
         self.MYLIST = []
+
 
         Clock.schedule_interval(self.update_points, 1/60.)
         Clock.schedule_interval(self.update_xaxis, 1/60.)
