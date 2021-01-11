@@ -6,55 +6,39 @@ from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from kivy.clock import Clock
-import jsonhelper
 from kivy_garden.graph import Graph, LinePlot
 from kivy.core.window import Window
-def get_price_btc():
-    #returns current price of btc
-    btc_api = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
-    api_key = 'e1c1a190-5e1d-42bd-9e88-d17213b9d2d8'
 
-    headers = {
-        'Accepts': 'application/json',
-        'X-CMC_PRO_API_KEY': api_key,
-    }
+import jsonhelper
 
-    sess = requests.session()
-    sess.headers.update(headers)
-    #data = sess.get(btc_api)
-    #price_in_usd = data.json()['data'][0]['quote']['USD']['price']
-    #print(type(data))
-    print(sys.version)
-    #print(price_in_usd)
-    #return(str(price_in_usd))
 
 
 class Myapp(App):
 
     #App Entry Point
     def build(self):
+        #self.CurrentPrice = 0
         #init stuff
-        Window.size = (1000,1000)
         Window.fullscreen = 'auto'
         #layout setup
         linegraph = linechart()
         layout = BoxLayout(orientation="vertical")
         #upper layout
         upperLayout = BoxLayout(orientation="horizontal")
-        
-        upperLayout.add_widget(Label(text=str(), font_size='200sp'))
+
+        upperLayout.add_widget(Label(text=str(round(linegraph.CurrentPrice, 2)), font_size='200sp'))
         upperLayout.add_widget(Image(source='IBM.svg.png'))
         #lower layout
         layout.add_widget(upperLayout)
         layout.add_widget(linegraph.get_points())
-        
-        
+
 
         return layout
 
 
 class linechart():
     def __init__(self):
+        self.CurrentPrice = 0
         self.graph = Graph(
             xlabel='Time',
             ylabel='Price',
@@ -67,9 +51,9 @@ class linechart():
             x_grid=True,
             y_grid=True,
             xmin=0,
-            xmax=50,
+            xmax=51,
             ymin=0,
-            ymax=1000,
+            
             )
 
 
@@ -83,7 +67,7 @@ class linechart():
 
 
         Clock.schedule_interval(self.update_points, 1/60.)
-        Clock.schedule_interval(self.update_xaxis, 1/60.)
+
 
 
 
@@ -91,16 +75,18 @@ class linechart():
 
 
     def update_points(self, *args):
-        self.plot.points = self.getPointsFromApi()
+        self.plot.points = self.plots
+
 
     def getPointsFromApi(self):
-
-        data = jsonhelper.getpointsstock(1)
+        data = jsonhelper.getpointsstock('AAPL', 'bvtss4748v6pijnevmqg')
         #sizing graph adding upper buffer
         #TODO Make buffer round
         self.graph.ymax = data['ymax']+data['ymax']/4
-
+        self.plots = data['plot']
+        self.CurrentPrice = data['CurrentPrice']
         return data['plot']
+
 
     def get_points(self):
         return self.graph
