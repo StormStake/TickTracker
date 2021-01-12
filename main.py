@@ -62,7 +62,7 @@ class Myapp(App):
         pageslay.add_widget(Page1.getWidget())
         pageslay.add_widget(Page2.getWidget())
         pageslay.add_widget(Page3.getWidget())
-        def update(passs):
+        def update(rap):
             for page in pages:
                 page.getchart().update_points()
         Clock.schedule_interval(update, 1/30.)
@@ -79,8 +79,10 @@ class GraphPage():
         #Upper Layout
         upperLayout = MyBox(orientation="horizontal")
         upperLayout.add_widget(Label(text=f'Current Quote:\n {str(round(self.chart.CurrentPrice, 2))}', font_size='100sp'))
+
+
         try:
-            upperLayout.add_widget(MyImage(source=f'{ticker}.png'))
+            upperLayout.add_widget(MyImage(source=f"{''.join(ticker.split(':'))}.png"))
         except:
             upperLayout.add_widget(MyImage(source=f'NA.png'))
         #Lower Layout
@@ -103,11 +105,14 @@ class linechart():
 
             self.cryptos.append(dicto['symbol'])
 
+
+        self.xticks = 10
+        self.xmax = 50
         self.chart = Graph(
             xlabel='Time',
             ylabel='Price',
             x_ticks_minor=0,
-            x_ticks_major=10,
+            x_ticks_major=self.xticks,
             y_ticks_major=self.yticks,
             y_grid_label=True,
             x_grid_label=True,
@@ -115,7 +120,7 @@ class linechart():
             x_grid=True,
             y_grid=True,
             xmin=0,
-            xmax=51,
+            xmax=self.xmax,
             ymin=0,
             )
 
@@ -130,25 +135,27 @@ class linechart():
 
 
     def update_points(self):
-        
-        self.yticks = self.chart.ymax/3
-        print(self.yticks,'\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
+        self.yticks = (self.chart.ymax - self.chart.ymin)/4
+        self.chart.y_ticks_major = self.yticks
         self.plot.points = self.plots
+        self.xmax = len(self.plot.points)-1
+        self.chart.xmax = self.xmax
 
-    def printsomething(self):
-        print('Hello World')
 
-    def getPointsFromApi(self):
+    def getPointsFromApi(self, *dt):
         if self.ticker in self.cryptos:
             data = jsonhelper.getCrytpoPlot(self.ticker, 'bvtss4748v6pijnevmqg')
         else:
             data = jsonhelper.GetStockPlot(self.ticker, 'bvtss4748v6pijnevmqg')
         #sizing graph adding upper buffer
-        #TODO Make buffer round
-        self.chart.ymax = data['ymax']+data['ymax']/4
-        self.chart.ymin = data['ymin']-data['ymin']/4
+        self.chart.ymax = round((data['ymax']+data['ymax']/4)/10)*10
+        self.chart.ymin = round((data['ymin']-data['ymin']/4)/10)*10
+        #sizing xmax
+        self.xmax = len(data['plot'])
+
         self.plots = data['plot']
         self.CurrentPrice = data['CurrentPrice']
+
         return data['plot']
 
 

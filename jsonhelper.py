@@ -19,7 +19,7 @@ def getCrytpoPlot(ticker, key):
     to = int(time.time())
     urlparams = {
         'symbol':str(ticker),
-        'resolution':'W',
+        'resolution':'D',
         'from':f'{fom}',
         'to':f'{to}',
         'token': key
@@ -43,7 +43,7 @@ def GetStockPlot(ticker ,key):
 
     urlparams = {
         'symbol':str(ticker),
-        'resolution':'W',
+        'resolution':'D',
         'from':f'{fom}',
         'to':f'{to}',
         'token': key
