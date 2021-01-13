@@ -50,8 +50,8 @@ class Myapp(App):
 
         #for window use
         #Window.borderless = '0'
-        Window.size = (1920,1080)
-        Window.clearcolor = (0.1,0.1,0.1,1)
+        #Window.size = (1920,1080)
+        #Window.clearcolor = (0.1,0.1,0.1,1)
         #layout setup
 
         pageslay = PageLayout(border="20")
@@ -79,7 +79,7 @@ class GraphPage():
 
         #Upper Layout
         upperLayout = MyBox(orientation="horizontal")
-        upperLayout.add_widget(Label(text=f'Current Quote:\n {str(round(self.chart.CurrentPrice, 2))}', font_size='100sp'))
+        upperLayout.add_widget(Label(text=f'Current Quote:\n {str(round(self.chart.CurrentPrice, 2))}', font_size='35sp'))
 
 
         try:
