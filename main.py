@@ -22,7 +22,7 @@ Builder.load_string("""
             size: self.size
             pos: self.pos
 """)
-pass
+
 Builder.load_string("""
 <MyBox>:
     bcolor: 0, 0, 0, 1
