@@ -11,6 +11,7 @@ from kivy.core.window import Window
 from kivy.lang import Builder
 import reqhelp
 import RPi.GPIO as GPIO
+import curses
 Builder.load_string("""
 <MyImage>:
     bcolor: 0, 0, 0, 1
@@ -68,10 +69,9 @@ class Myapp(App):
         for i in range(len(pages)):
             pageslay.add_widget(pages[i].getWidget())
 
-
-
+        srdscr = curses.initscr()
+        curses.curs_set(0)
         requer = reqhelp.helper()
-
 
         for ticker in tickers:
             requer.addtotargets(ticker)
