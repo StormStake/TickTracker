@@ -44,9 +44,9 @@ class Myapp(App):
     def build(self):
 
         #rpi setup
-        self.channels = [17,22,23,27]
+        channels = [17,22,23,27]
         GPIO.setmode(GPIO.BCM)
-        for channel in self.channels:
+        for channel in channels:
             GPIO.setup(channel, GPIO.OUT)
             GPIO.output(channel, GPIO.HIGH)
 
@@ -89,7 +89,7 @@ class Myapp(App):
 
 
         def checkpins(self):
-            for channel in self.channels:
+            for channel in channels:
                 print(f'Pin {channel}:',GPIO.input(channel))
 
 
