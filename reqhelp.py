@@ -59,7 +59,7 @@ class helper():
         relist = []
 
         fom = int(time.time() - 31560000)
-        to = int(time.time())
+        to = int(time.time()-30)
 
         urlparams = {
             'symbol':str(ticker),
@@ -70,20 +70,22 @@ class helper():
         }
 
         data = json.loads(requests.get('https://finnhub.io/api/v1/stock/candle', params=urlparams).text)
-        timestamps = data['t']
-        prices = data['c']
-        ymax = max(data['c'])
-        ymin = min(data['c'])
-        for times, value in zip(range(len(prices)) , prices):
-            relist.append((times,value))
-        return {'plot':relist, 'ymax':ymax, 'CurrentPrice': relist[-1][1],'ymin': ymin, 'ticker':ticker}
-
+        try:
+            timestamps = data['t']
+            prices = data['c']
+            ymax = max(data['c'])
+            ymin = min(data['c'])
+            for times, value in zip(range(len(prices)) , prices):
+                relist.append((times,value))
+            return {'plot':relist, 'ymax':ymax, 'CurrentPrice': relist[-1][1],'ymin': ymin, 'ticker':ticker}
+        except KeyError:
+            return {'CurrentPrice': 0}
 
 
     def getCrytpoPlot(self, ticker, key):
         returnlist = []
         fom = int(time.time() - 31560000)
-        to = int(time.time())
+        to = int(time.time()-30)
         urlparams = {
             'symbol':str(ticker),
             'resolution':'D',
@@ -92,12 +94,15 @@ class helper():
             'token': key
         }
         data = json.loads(requests.get('https://finnhub.io/api/v1/crypto/candle', params=urlparams).text)
-        timestamps = data['t']
-        prices = data['c']
-        ymax = max(data['c'])
-        ymin = min(data['c'])
+        try:
+            print(data)
+            timestamps = data['t']
+            prices = data['c']
+            ymax = max(data['c'])
+            ymin = min(data['c'])
 
-        for times, value in zip(range(len(prices)) , prices):
-            returnlist.append((times,value))
-        return {'plot':returnlist, 'ymax':ymax, 'CurrentPrice': returnlist[-1][1],'ymin': ymin, 'ticker':ticker}
-
+            for times, value in zip(range(len(prices)) , prices):
+                returnlist.append((times,value))
+            return {'plot':returnlist, 'ymax':ymax, 'CurrentPrice': returnlist[-1][1],'ymin': ymin, 'ticker':ticker}
+        except KeyError:
+            return {'CurrentPrice': 0}

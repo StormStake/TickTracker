@@ -10,10 +10,7 @@ from kivy_garden.graph import Graph, SmoothLinePlot
 from kivy.core.window import Window
 from kivy.lang import Builder
 import reqhelp
-import requests
-import json
-import threading
-import time
+import RPi.GPIO as GPIO
 Builder.load_string("""
 <MyImage>:
     bcolor: 0, 0, 0, 1
@@ -46,13 +43,20 @@ class Myapp(App):
     #App Entry Point
     def build(self):
 
+        #rpi setup
+        channel = 17
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(channel,GPIO.OUT)
+        GPIO.output(channel,GPIO.OUT)
+
+
 
         #for fullscreen use
         Window.fullscreen = 'auto'
-
+        self.i = 0
         #for window use
         #Window.borderless = '0'
-        Window.size = (1280,720)
+        #Window.size = (1280,720)
         #Window.clearcolor = (0.1,0.1,0.1,1)
         #layout setup
         tickers = ['IBM','AAPL','BINANCE:BTCUSDT']
@@ -76,14 +80,21 @@ class Myapp(App):
         requer.start()
 
         def update(*rap):
+
             for page in pages:
                 data = requer.getdata(page.getTicker())
-                
+
                 if data != 0:
                     page.getchart().update(data)
                     page.Currentpricelabel.text = f'Current Quote:\n {str(round(page.getchart().CurrentPrice,2))}'
 
+
+        def checkpins(self):
+            print(GPIO.input(channel))
+
+
         Clock.schedule_interval(update, 1/30)
+        Clock.schedule_interval(checkpins, 1/30)
         return pageslay
 
 
@@ -152,23 +163,23 @@ class linechart():
 
     def update(self, data):
 
-
-        #sizing graph adding upper buffer
-        self.chart.ymax = round((data['ymax']+data['ymax']/4)/10)*10
-        self.chart.ymin = round((data['ymin']-data['ymin']/4)/10)*10
-        #sizing xmax
-        self.xmax = len(data['plot'])
-
-        self.plots = data['plot']
         self.CurrentPrice = data['CurrentPrice']
+        try:
+            #sizing graph adding upper buffer
+            self.chart.ymax = round((data['ymax']+data['ymax']/4)/10)*10
+            self.chart.ymin = round((data['ymin']-data['ymin']/4)/10)*10
+            #sizing xmax
+            self.xmax = len(data['plot'])
 
-        
-        self.yticks = (self.chart.ymax - self.chart.ymin)/4
-        self.chart.y_ticks_major = self.yticks
-        self.plot.points = self.plots
-        self.xmax = len(self.plot.points)-1
-        self.chart.xmax = self.xmax
+            self.plots = data['plot']
 
+            self.yticks = (self.chart.ymax - self.chart.ymin)/4
+            self.chart.y_ticks_major = self.yticks
+            self.plot.points = self.plots
+            self.xmax = len(self.plot.points)-1
+            self.chart.xmax = self.xmax
+        except:
+            pass
 
 
 
