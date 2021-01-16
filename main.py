@@ -47,13 +47,13 @@ class Myapp(App):
         channel = 17
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(channel,GPIO.OUT)
-        GPIO.output(channel,GPIO.LOW)
+        GPIO.output(channel,GPIO.HIGH)
 
 
 
         #for fullscreen use
         Window.fullscreen = 'auto'
-        self.i = 0
+
         #for window use
         #Window.borderless = '0'
         #Window.size = (1280,720)
