@@ -89,12 +89,12 @@ class Myapp(App):
 
 
         def checkpins(self):
-            for channel in channels:
-                print(f'Pin {channel}:',GPIO.input(channel))
-
+            for i in range(len(channels)):
+                if GPIO.input(channels[i]) == 0:
+                    pageslay.page = i
 
         Clock.schedule_interval(update, 1/30)
-        Clock.schedule_interval(checkpins, 1/30)
+        Clock.schedule_interval(checkpins, 1/3)
         return pageslay
 
 
