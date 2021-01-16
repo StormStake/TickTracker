@@ -44,12 +44,11 @@ class Myapp(App):
     def build(self):
 
         #rpi setup
-        channel = 17
+        self.channels = [17,22,23,27]
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(channel,GPIO.OUT)
-        GPIO.output(channel,GPIO.HIGH)
-
-
+        for channel in self.channels:
+            GPIO.setup(channel, GPIO.OUT)
+            GPIO.output(channel, GPIO.HIGH)
 
         #for fullscreen use
         Window.fullscreen = 'auto'
@@ -90,7 +89,8 @@ class Myapp(App):
 
 
         def checkpins(self):
-            print(GPIO.input(channel))
+            for channel in self.channels:
+                print(f'Pin {channel}:',GPIO.input(channel))
 
 
         Clock.schedule_interval(update, 1/30)
