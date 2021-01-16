@@ -48,7 +48,7 @@ class Myapp(App):
 
 
         #for fullscreen use
-        #Window.fullscreen = 'auto'
+        Window.fullscreen = 'auto'
 
         #for window use
         #Window.borderless = '0'
