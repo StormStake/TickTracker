@@ -54,7 +54,7 @@ class helper():
             return {'Fail': True}
 
     #starts the data refreshing
-    def start(self):
+    def start(self, *dt):
 
         self.obatinresults(self.listoftargets, 'bvtss4748v6pijnevmqg')
         
