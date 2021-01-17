@@ -56,7 +56,7 @@ class Myapp(App):
 
         #for fullscreen use
         Window.fullscreen = 'auto'
-        pindt = 0
+        
 
         tickers = [
                     'IBM',
@@ -93,15 +93,15 @@ class Myapp(App):
                     page.getchart().update(data)
                     page.Currentpricelabel.text = f'Current Quote:\n {str(round(page.getchart().CurrentPrice,2))}'
 
-
+        pindt = 0
         def checkpins(self):
-            while True:
-                if GPIO.input(17) == 0:
-                    pageslay.page += 1
-                    pindt = time.time()
-                if GPIO.input(22) == 0:
-                    pageslay.page -= 1
-                    pindt = time.time()
+
+            if GPIO.input(17) == 0:
+                pageslay.page += 1
+                pindt = time.time()
+            if GPIO.input(22) == 0:
+                pageslay.page -= 1
+                pindt = time.time()
 
         Clock.schedule_interval(update, 1/30)
         Clock.schedule_interval(checkpins, 1/20)
