@@ -80,7 +80,7 @@ class Myapp(App):
 
         requer = reqhelp.helper()
 
-        requer.changeTimeSpan('D')
+        requer.changeTimeSpan('W')
         requer.ChangeResolution(30)
         for ticker in tickers:
             requer.addtotargets(ticker)
