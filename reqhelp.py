@@ -101,7 +101,7 @@ class helper():
             return {'plot':plot, 'ymax':ymax, 'CurrentPrice': plot[-1][1],'ymin': ymin, 'ticker':ticker}
 
         except KeyError:
-            return {'CurrentPrice': 0}
+            return {'Fail': True}
 
     #level one api
     def getCrytpoPlot(self, ticker, key):
