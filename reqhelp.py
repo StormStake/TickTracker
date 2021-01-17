@@ -25,8 +25,6 @@ class helper():
         self.timeSpan = self.timeSpans[span]
 
     def nextTimeSpan(self):
-
-
         self.timeSpanTarget += 1
 
         if self.timeSpanTarget == 4:
