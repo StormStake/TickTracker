@@ -97,10 +97,12 @@ class Myapp(App):
         def checkpins(self):
 
             if GPIO.input(17) == 0:
-                pageslay.page += 1
+                if time.time() - pindt > 0.2:
+                    pageslay.page += 1
                 pindt = time.time()
             if GPIO.input(22) == 0:
-                pageslay.page -= 1
+                if time.time() - pindt > 0.2:
+                    pageslay.page -= 1
                 pindt = time.time()
 
         Clock.schedule_interval(update, 1/30)
