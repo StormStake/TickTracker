@@ -95,7 +95,7 @@ class Myapp(App):
                 if not data['Fail']:
                     page.getchart().update(data)
                     page.Currentpricelabel.text = f'Current Quote:\n {str(round(page.getchart().CurrentPrice,2))}'
-                    page.plot.points = data['plot']
+                    page.getchart().plot.points = data['plot']
 
         
         def checkpins(self):
