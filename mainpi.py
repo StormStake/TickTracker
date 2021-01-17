@@ -10,8 +10,8 @@ from kivy_garden.graph import Graph, SmoothLinePlot
 from kivy.core.window import Window
 from kivy.lang import Builder
 import reqhelp
-
-
+import RPi.GPIO as GPIO
+import curses
 Builder.load_string("""
 <MyImage>:
     bcolor: 0, 0, 0, 1
@@ -44,9 +44,19 @@ class Myapp(App):
     #App Entry Point
     def build(self):
 
+        #rpi setup
+        channels = [17,22,23,27]
+        GPIO.setmode(GPIO.BCM)
+        for channel in channels:
+            GPIO.setup(channel, GPIO.OUT)
+            GPIO.output(channel, GPIO.HIGH)
+
+
+
+
         #for fullscreen use
         Window.fullscreen = 'auto'
-        #Window.size = (1280,720)
+
 
         tickers = [
                     'IBM',
@@ -58,6 +68,7 @@ class Myapp(App):
         pages = []
         pageslay = PageLayout(border="20")
 
+
         for i in range(len(tickers)):
             pages.append(GraphPage(tickers[i]))
         for i in range(len(pages)):
@@ -66,17 +77,15 @@ class Myapp(App):
 
         requer = reqhelp.helper()
 
-
+        requer.changeTimeSpan('W')
+        requer.ChangeResolution(30)
         for ticker in tickers:
             requer.addtotargets(ticker)
 
-        requer.changeTimeSpan('W')
-        requer.ChangeResolution(30)
-
         requer.start()
 
-
         def update(*rap):
+
             for page in pages:
                 data = requer.getdata(page.getTicker())
 
@@ -84,7 +93,16 @@ class Myapp(App):
                     page.getchart().update(data)
                     page.Currentpricelabel.text = f'Current Quote:\n {str(round(page.getchart().CurrentPrice,2))}'
 
+
+        def checkpins(self):
+            for i in range(len(channels)):
+                if GPIO.input('17') == 0:
+                    pageslay.page += 1
+                if GPIO.input('22') == 0:
+                    pageslay.page -= 1
+
         Clock.schedule_interval(update, 1/30)
+        Clock.schedule_interval(checkpins, 1/20)
         return pageslay
 
 
@@ -100,11 +118,11 @@ class GraphPage():
         upperLayout = MyBox(orientation="horizontal")
         upperLayout.add_widget(self.Currentpricelabel)
 
-        #TODO make the NA image be used as this wont raise an exception when a image is not found
+
         try:
-            upperLayout.add_widget(MyImage(source=f"./Images/{''.join(ticker.split(':'))}.png"))
+            upperLayout.add_widget(MyImage(source=f"{''.join(ticker.split(':'))}.png"))
         except:
-            upperLayout.add_widget(MyImage(source=f'./Images/NA.png'))
+            upperLayout.add_widget(MyImage(source=f'NA.png'))
         #Lower Layout
         self.Page.add_widget(upperLayout)
         self.Page.add_widget(self.chart.Get_graph())
@@ -123,6 +141,8 @@ class linechart():
         self.ticker = ticker
         self.cryptos = []
         self.yticks = 100
+
+
 
         self.xticks = 10
         self.xmax = 50
@@ -147,25 +167,20 @@ class linechart():
         self.chart.add_plot(self.plot)
 
 
+
+
     def update(self, data):
 
         self.CurrentPrice = data['CurrentPrice']
-
-        difference = data['ymax']-data['ymin']
-        posmax = data['ymax']+difference/3
-        negmin = data['ymin']-difference/3
-
         try:
-            #sizing graph
-            self.chart.ymax = round(posmax)
-            self.chart.ymin = round(negmin)
-
-
+            #sizing graph adding upper buffer
+            self.chart.ymax = round((data['ymax']+data['ymax']/4)/10)*10
+            self.chart.ymin = round((data['ymin']-data['ymin']/4)/10)*10
             #sizing xmax
             self.xmax = len(data['plot'])
 
             self.plots = data['plot']
-            #setting amount of tick for the chart
+
             self.yticks = (self.chart.ymax - self.chart.ymin)/4
             self.chart.y_ticks_major = self.yticks
             self.plot.points = self.plots
