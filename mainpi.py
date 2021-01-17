@@ -91,8 +91,8 @@ class Myapp(App):
 
             for page in pages:
                 data = requer.getdata(page.getTicker())
-
-                if data != {'CurrentPrice':0}:
+                print(data['Fail': True])
+                if data != data['Fail': True]:
                     page.getchart().update(data)
                     page.Currentpricelabel.text = f'Current Quote:\n {str(round(page.getchart().CurrentPrice,2))}'
 
