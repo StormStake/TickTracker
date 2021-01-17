@@ -56,14 +56,8 @@ class helper():
     #starts the data refreshing
     def start(self):
 
-        x = threading.Thread(target=self.threadingtarget)
-        x.start()
+        threading.Timer(1/30, self.obatinresults(self.listoftargets, 'bvtss4748v6pijnevmqg')).start()
 
-    #level three api
-    def threadingtarget(self):
-        def thing():
-            self.obatinresults(self.listoftargets, 'bvtss4748v6pijnevmqg')
-        threading.Timer(1/30, thing).start()
 
 
     #level two api
