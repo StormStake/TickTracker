@@ -56,8 +56,8 @@ class helper():
     #starts the data refreshing
     def start(self):
 
-        t = threading.Timer(1/30, self.obatinresults, [self.listoftargets, 'bvtss4748v6pijnevmqg'])
-        t.start()
+        self.obatinresults(self.listoftargets, 'bvtss4748v6pijnevmqg')
+        
 
 
 

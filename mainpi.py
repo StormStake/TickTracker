@@ -124,7 +124,7 @@ class Myapp(App):
                 if time.time() - pindt > 0.2:
                 
                     requer.nextTimeSpan()
-                    
+
                 pindt = time.time()
 
             if GPIO.input(27) == 0:
@@ -139,6 +139,7 @@ class Myapp(App):
     
         Clock.schedule_interval(update, 1/30)
         Clock.schedule_interval(checkpins, 1/20)
+        Clock.schedule_interval(requer.start, 1/30)
         return pageslay
 
 
