@@ -15,6 +15,7 @@ class helper():
             self.cryptos.append(dicto['symbol'])
         self.resolutions = [1, 5, 15, 30, 60, 'D', 'W', 'M']
         self.resolution = 30
+        self.targetResolution = 0
 
 
         self.targets = ['W','M','Y','YTD']
@@ -33,7 +34,8 @@ class helper():
         self.timeSpan = self.timeSpans[self.targets[self.timeSpanTarget]]
 
     def ChangeResolution(self, rez):
-        self.resolution = rez
+        self.targetResolution = self.resolutions.index(rez)
+        self.resolution = self.targetResolution
 
     def getTimeSpan(self):
         return self.targets[self.timeSpanTarget]
@@ -44,7 +46,11 @@ class helper():
         else:
             return(False)
 
-
+    def nextResolution(self):
+        self.targetResolution += 1
+        if self.targetResolution == 8:
+            self.targetResolution = 0
+        self.ChangeResolution(self.resolutions[self.targetResolution])
 
     #public methods end
 

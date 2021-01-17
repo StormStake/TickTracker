@@ -132,9 +132,8 @@ class Myapp(App):
 
                 if time.time() - pindt > 0.2:
 
-                    if pageslay.page > 0:
-                        pageslay.page -= 1
-
+                    requer.nextResolution()
+                    requer.start()
                 pindt = time.time()
 
 
