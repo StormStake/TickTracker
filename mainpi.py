@@ -233,7 +233,7 @@ class linechart():
             self.chart.xmax = self.xmax
         except:
             pass
-        print(f'request took {time.time() - before } seconds')
+        print(f'update took {time.time() - before } seconds')
 
 
     def Get_graph(self):
