@@ -11,7 +11,7 @@ from kivy.core.window import Window
 from kivy.lang import Builder
 import reqhelp
 import RPi.GPIO as GPIO
-import curses
+import time
 Builder.load_string("""
 <MyImage>:
     bcolor: 0, 0, 0, 1
@@ -95,11 +95,13 @@ class Myapp(App):
 
 
         def checkpins(self):
-            for i in range(len(channels)):
+            if time.time() - self.pindt > 0.5:
                 if GPIO.input(17) == 0:
                     pageslay.page += 1
+                    self.pindt = time.time()
                 if GPIO.input(22) == 0:
                     pageslay.page -= 1
+                    self.pindt = time.time()
 
         Clock.schedule_interval(update, 1/30)
         Clock.schedule_interval(checkpins, 1/20)
