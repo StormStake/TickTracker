@@ -225,7 +225,7 @@ class linechart():
             self.xmax = len(data['plot'])
 
             self.plots = data['plot']
-
+            self.xticks = self.xmax / 12
             self.yticks = (self.chart.ymax - self.chart.ymin)/4
             self.chart.y_ticks_major = self.yticks
             self.plot.points = self.plots
