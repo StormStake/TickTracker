@@ -46,7 +46,7 @@ class helper():
             return self.data[ticker]
 
         except:
-            return 0
+            return {'Fail': True}
 
     #starts the data refreshing
     def start(self):
