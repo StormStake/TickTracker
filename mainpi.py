@@ -140,7 +140,7 @@ class Myapp(App):
 
         Clock.schedule_interval(update, 1/5)
         Clock.schedule_interval(checkpins, 1/20)
-        Clock.schedule_interval(requer.start, 0.5)
+        Clock.schedule_interval(requer.start, 1)
         return pageslay
 
 
@@ -208,7 +208,7 @@ class linechart():
 
 
     def update(self, data):
-
+        before = time.time()
         self.CurrentPrice = data['CurrentPrice']
 
         difference = data['ymax']-data['ymin']
@@ -233,7 +233,7 @@ class linechart():
             self.chart.xmax = self.xmax
         except:
             pass
-
+        print(f'request took {time.time() - before } seconds')
 
 
     def Get_graph(self):
