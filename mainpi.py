@@ -56,7 +56,7 @@ class Myapp(App):
 
         #for fullscreen use
         Window.fullscreen = 'auto'
-
+        self.pindt = 0
 
         tickers = [
                     'IBM',
