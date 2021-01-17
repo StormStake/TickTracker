@@ -56,7 +56,7 @@ class Myapp(App):
 
         #for fullscreen use
         Window.fullscreen = 'auto'
-        self.pindt = 0
+        pindt = 0
 
         tickers = [
                     'IBM',
@@ -95,13 +95,13 @@ class Myapp(App):
 
 
         def checkpins(self):
-            if time.time() - self.pindt > 0.5:
+            while True:
                 if GPIO.input(17) == 0:
                     pageslay.page += 1
-                    self.pindt = time.time()
+                    pindt = time.time()
                 if GPIO.input(22) == 0:
                     pageslay.page -= 1
-                    self.pindt = time.time()
+                    pindt = time.time()
 
         Clock.schedule_interval(update, 1/30)
         Clock.schedule_interval(checkpins, 1/20)
