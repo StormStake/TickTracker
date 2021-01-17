@@ -56,7 +56,8 @@ class helper():
     #starts the data refreshing
     def start(self, *dt):
 
-        self.obatinresults(self.listoftargets, 'bvtss4748v6pijnevmqg')
+        x = threading.Thread(target=self.obatinresults,args=[self.listoftargets, 'bvtss4748v6pijnevmqg'])
+        x.start()
         print('RAN')
 
 
