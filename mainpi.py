@@ -124,7 +124,7 @@ class Myapp(App):
                 if time.time() - pindt > 0.2:
                 
                     requer.nextTimeSpan()
-
+                    
                 pindt = time.time()
 
             if GPIO.input(27) == 0:
