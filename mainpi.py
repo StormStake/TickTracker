@@ -139,7 +139,7 @@ class Myapp(App):
     
         Clock.schedule_interval(update, 1/30)
         Clock.schedule_interval(checkpins, 1/20)
-        Clock.schedule_interval(requer.start, 1/30)
+        Clock.schedule_interval(requer.start, 1/2)
         return pageslay
 
 
