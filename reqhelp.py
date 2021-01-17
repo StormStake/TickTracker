@@ -27,7 +27,7 @@ class helper():
 
         self.timeSpanTarget += 1
 
-        if self.timeSpanTarget == 5:
+        if self.timeSpanTarget == 4:
             self.timeSpanTarget = 0
 
         self.timeSpan = self.timeSpans[targets[self.timeSpanTarget]]
