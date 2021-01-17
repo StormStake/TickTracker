@@ -55,9 +55,9 @@ class helper():
 
     #starts the data refreshing
     def start(self, *dt):
-
-        self.obatinresults(self.listoftargets, 'bvtss4748v6pijnevmqg')
-        print('RAN')
+        while True:
+            self.obatinresults(self.listoftargets, 'bvtss4748v6pijnevmqg')
+            print('RAN')
 
 
 
