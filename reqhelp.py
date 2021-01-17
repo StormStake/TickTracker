@@ -57,7 +57,7 @@ class helper():
     def start(self, *dt):
 
         self.obatinresults(self.listoftargets, 'bvtss4748v6pijnevmqg')
-        
+        print('RAN')
 
 
 
