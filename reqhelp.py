@@ -35,7 +35,7 @@ class helper():
 
     def ChangeResolution(self, rez):
         self.targetResolution = self.resolutions.index(rez)
-        self.resolution = self.targetResolution
+        self.resolution = self.resolutions[self.targetResolution]
 
     def getTimeSpan(self):
         return self.targets[self.timeSpanTarget]
