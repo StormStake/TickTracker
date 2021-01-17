@@ -12,6 +12,9 @@ from kivy.lang import Builder
 import reqhelp
 import RPi.GPIO as GPIO
 import time
+
+pindt = 0
+
 Builder.load_string("""
 <MyImage>:
     bcolor: 0, 0, 0, 1
@@ -93,9 +96,10 @@ class Myapp(App):
                     page.getchart().update(data)
                     page.Currentpricelabel.text = f'Current Quote:\n {str(round(page.getchart().CurrentPrice,2))}'
 
-        pindt = 0
+        
         def checkpins(self):
 
+            global pindt
             if GPIO.input(17) == 0:
                 if time.time() - pindt > 0.2:
                     pageslay.page += 1
