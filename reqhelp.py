@@ -24,7 +24,12 @@ class helper():
 
     def nextTimeSpan(self):
         targets = ['D','W','M','Y','YTD']
+
         self.timeSpanTarget += 1
+
+        if self.timeSpanTarget == 5:
+            self.timeSpanTarget = 0
+            
         self.timeSpan = self.timeSpans[targets[self.timeSpanTarget]]
 
     def ChangeResolution(self, rez):

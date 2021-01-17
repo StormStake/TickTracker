@@ -120,8 +120,8 @@ class Myapp(App):
             if GPIO.input(23) == 0:
 
                 if time.time() - pindt > 0.2:
-                    if pageslay.page > 0:
-                        requer.nextTimeSpan()
+                
+                    requer.nextTimeSpan()
 
                 pindt = time.time()
 
