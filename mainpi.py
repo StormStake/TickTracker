@@ -91,8 +91,9 @@ class Myapp(App):
 
             for page in pages:
                 data = requer.getdata(page.getTicker())
-                print(len(data['plot']))
+                
                 if not data['Fail']:
+                    print(len(data['plot']))
                     page.getchart().update(data)
                     page.Currentpricelabel.text = f'Current Quote:\n {str(round(page.getchart().CurrentPrice,2))}'
                     page.getchart().plot.points = data['plot']
