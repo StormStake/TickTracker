@@ -103,7 +103,7 @@ class Myapp(App):
 
             if GPIO.input(17) == 0:
                 if time.time() - pindt > 0.2:
-                    if pageslay.page < 4:
+                    if pageslay.page < len(tickers)-1:
                         pageslay.page += 1
                 pindt = time.time()
             if GPIO.input(22) == 0:
