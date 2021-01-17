@@ -95,6 +95,7 @@ class Myapp(App):
                 if not data['Fail']:
                     page.getchart().update(data)
                     page.Currentpricelabel.text = f'Current Quote:\n {str(round(page.getchart().CurrentPrice,2))}'
+                    page.plot.points = data['plot']
 
         
         def checkpins(self):
@@ -205,7 +206,7 @@ class linechart():
 
     def update(self, data):
 
-        self.CurrentPrice = time.time()#data['CurrentPrice']
+        self.CurrentPrice = data['CurrentPrice']
 
         difference = data['ymax']-data['ymin']
         posmax = data['ymax']+difference/3
