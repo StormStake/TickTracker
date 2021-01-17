@@ -142,6 +142,7 @@ class Myapp(App):
         Clock.schedule_interval(update, 1/30)
         Clock.schedule_interval(checkpins, 1/20)
         x = threading.Timer(1/2,requer.start)
+        x.start()
         return pageslay
 
 
