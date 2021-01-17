@@ -120,9 +120,9 @@ class GraphPage():
 
 
         try:
-            upperLayout.add_widget(MyImage(source=f"{''.join(ticker.split(':'))}.png"))
+            upperLayout.add_widget(MyImage(source=f"./Images/{''.join(ticker.split(':'))}.png"))
         except:
-            upperLayout.add_widget(MyImage(source=f'NA.png'))
+            upperLayout.add_widget(MyImage(source=f'./Images/NA.png'))
         #Lower Layout
         self.Page.add_widget(upperLayout)
         self.Page.add_widget(self.chart.Get_graph())
