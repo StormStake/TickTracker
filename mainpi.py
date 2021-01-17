@@ -80,7 +80,7 @@ class Myapp(App):
 
         requer = reqhelp.helper()
 
-        requer.changeTimeSpan('W')
+        requer.changeTimeSpan('D')
         requer.ChangeResolution(30)
         for ticker in tickers:
             requer.addtotargets(ticker)
@@ -102,16 +102,39 @@ class Myapp(App):
             global pindt
 
             if GPIO.input(17) == 0:
+
                 if time.time() - pindt > 0.2:
                     if pageslay.page < len(tickers)-1:
                         pageslay.page += 1
+
                 pindt = time.time()
+
             if GPIO.input(22) == 0:
+
                 if time.time() - pindt > 0.2:
                     if pageslay.page > 0:
                         pageslay.page -= 1
+
                 pindt = time.time()
 
+            if GPIO.input(23) == 0:
+
+                if time.time() - pindt > 0.2:
+                    if pageslay.page > 0:
+                        requer.nextTimeSpan()
+
+                pindt = time.time()
+
+            if GPIO.input(27) == 0:
+
+                if time.time() - pindt > 0.2:
+
+                    if pageslay.page > 0:
+                        pageslay.page -= 1
+
+                pindt = time.time()
+
+    
         Clock.schedule_interval(update, 1/30)
         Clock.schedule_interval(checkpins, 1/20)
         return pageslay

@@ -17,10 +17,15 @@ class helper():
         self.resolution = 30
 
         self.timeSpans = {'Y': 31536000, 'YTD':datetime.datetime(datetime.date.today().year,1,1,0,0).timestamp(), 'M': 2628000, 'W':604800, 'D':86400,}
-
+        self.timeSpanTarget = 0
     #Public Methods
     def changeTimeSpan(self, span):
         self.timeSpan = self.timeSpans[span]
+
+    def nextTimeSpan(self):
+        targets = ['D','W','M','Y','YTD']
+        self.timeSpanTarget += 1
+        self.timeSpan = self.timeSpans[targets[self.timeSpanTarget]]
 
     def ChangeResolution(self, rez):
         self.resolution = rez
