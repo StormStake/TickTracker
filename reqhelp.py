@@ -112,6 +112,7 @@ class helper():
     def getCrytpoPlot(self, ticker, key):
 
         plot = []
+        print('TIMESPAN: ',self.timeSpan)
         starttime = int(time.time() - self.timeSpan)
         endtime = int(time.time())
         urlparams = {
