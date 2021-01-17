@@ -62,7 +62,7 @@ class helper():
 
         x = threading.Thread(target=self.obatinresults,args=[self.listoftargets, 'bvtss4748v6pijnevmqg'])
         x.start()
-        print('RAN')
+
 
 
 
@@ -82,7 +82,7 @@ class helper():
     def getStockPlot(self, ticker ,key):
 
         plot = []
-        print('TIMESPAN: ',self.timeSpan)
+
         starttime = int(time.time() - self.timeSpan)
         endtime = int(time.time())
 
@@ -93,9 +93,9 @@ class helper():
             'to':f'{endtime}',
             'token': key
         }
-
+        before = time.time()
         data = json.loads(requests.get('https://finnhub.io/api/v1/stock/candle', params=urlparams).text)
-
+        print(f'request took {before - time.time()} seconds')
         try:
             timestamps = data['t']
             prices = data['c']
@@ -112,7 +112,7 @@ class helper():
     def getCrytpoPlot(self, ticker, key):
 
         plot = []
-        print('TIMESPAN: ',self.timeSpan)
+        
         starttime = int(time.time() - self.timeSpan)
         endtime = int(time.time())
         urlparams = {
@@ -123,8 +123,9 @@ class helper():
             'token': key
         }
 
+        before = time.time()
         data = json.loads(requests.get('https://finnhub.io/api/v1/crypto/candle', params=urlparams).text)
-
+        print(f'request took {before - time.time()} seconds')
         try:
             timestamps = data['t']
             prices = data['c']

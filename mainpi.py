@@ -99,7 +99,7 @@ class Myapp(App):
                     page.Currentpricelabel.text = f'Current Quote:\n {str(round(page.getchart().CurrentPrice,2))}\nTime Span: {requer.getTimeSpan()}'
                     page.getchart().plot.points = data['plot']
 
-        
+
         def checkpins(self):
 
             global pindt
@@ -137,7 +137,7 @@ class Myapp(App):
 
                 pindt = time.time()
 
-    
+
         Clock.schedule_interval(update, 1/5)
         Clock.schedule_interval(checkpins, 1/20)
         Clock.schedule_interval(requer.start, 0.5)
