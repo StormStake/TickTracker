@@ -12,6 +12,8 @@ from kivy.lang import Builder
 import reqhelp
 import RPi.GPIO as GPIO
 import time
+import threading
+
 
 pindt = 0
 
@@ -139,7 +141,7 @@ class Myapp(App):
     
         Clock.schedule_interval(update, 1/30)
         Clock.schedule_interval(checkpins, 1/20)
-        Clock.schedule_interval(requer.start, 1/2)
+        x = threading.Timer(1/2,requer.start)
         return pageslay
 
 
