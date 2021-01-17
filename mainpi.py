@@ -96,9 +96,9 @@ class Myapp(App):
 
         def checkpins(self):
             for i in range(len(channels)):
-                if GPIO.input('17') == 0:
+                if GPIO.input(17) == 0:
                     pageslay.page += 1
-                if GPIO.input('22') == 0:
+                if GPIO.input(22) == 0:
                     pageslay.page -= 1
 
         Clock.schedule_interval(update, 1/30)
