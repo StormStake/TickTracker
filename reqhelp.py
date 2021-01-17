@@ -103,7 +103,7 @@ class helper():
             ymin = min(data['c'])
             for times, value in zip(range(len(prices)) , prices):
                 plot.append((times,value))
-            return {'plot':plot, 'ymax':ymax, 'CurrentPrice': plot[-1][1],'ymin': ymin, 'ticker':ticker, 'Fail': False}
+            return {'plot':plot, 'ymax':ymax, 'CurrentPrice': prices[-1],'ymin': ymin, 'ticker':ticker, 'Fail': False}
 
         except KeyError:
             return {'Fail': True}
@@ -133,7 +133,7 @@ class helper():
 
             for times, value in zip(range(len(prices)) , prices):
                 plot.append((times,value))
-            return {'plot':plot, 'ymax':ymax, 'CurrentPrice': plot[-1][1],'ymin': ymin, 'ticker':ticker,'Fail': False}
+            return {'plot':plot, 'ymax':ymax, 'CurrentPrice': prices[-1],'ymin': ymin, 'ticker':ticker,'Fail': False}
 
         except:
             return {'Fail': True}
