@@ -139,7 +139,7 @@ class Myapp(App):
                 pindt = time.time()
 
     
-        Clock.schedule_interval(update, 1/30)
+        Clock.schedule_interval(update, 1/5)
         Clock.schedule_interval(checkpins, 1/20)
         Clock.schedule_interval(requer.start, 0.5)
         return pageslay
