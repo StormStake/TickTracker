@@ -16,6 +16,8 @@ class helper():
         self.resolutions = [1, 5, 15, 30, 60, 'D', 'W', 'M']
         self.resolution = 30
 
+
+        self.targets = ['W','M','Y','YTD']
         self.timeSpans = {'Y': 31536000, 'YTD':datetime.datetime(datetime.date.today().year,1,1,0,0).timestamp(), 'M': 2628000, 'W':604800,}
         self.timeSpanTarget = 0
     #Public Methods
@@ -23,17 +25,20 @@ class helper():
         self.timeSpan = self.timeSpans[span]
 
     def nextTimeSpan(self):
-        targets = ['W','M','Y','YTD']
+
 
         self.timeSpanTarget += 1
 
         if self.timeSpanTarget == 4:
             self.timeSpanTarget = 0
 
-        self.timeSpan = self.timeSpans[targets[self.timeSpanTarget]]
+        self.timeSpan = self.timeSpans[self.targets[self.timeSpanTarget]]
 
     def ChangeResolution(self, rez):
         self.resolution = rez
+
+    def getTimeSpan(self):
+        return self.targets[self.timeSpanTarget]
 
     def addtotargets(self, ticker):
         if ticker not in self.listoftargets:
@@ -43,6 +48,7 @@ class helper():
 
 
 
+    #public methods end
 
     #level one data collection
     def getdata(self, ticker):

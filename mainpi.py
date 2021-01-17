@@ -97,7 +97,7 @@ class Myapp(App):
                 if not data['Fail']:
                     print(len(data['plot']))
                     page.getchart().update(data)
-                    page.Currentpricelabel.text = f'Current Quote:\n {str(round(page.getchart().CurrentPrice,2))}'
+                    page.Currentpricelabel.text = f'Current Quote:\n {str(round(page.getchart().CurrentPrice,2))}\nTime Span: {requer.getTimeSpan()}'
                     page.getchart().plot.points = data['plot']
 
         
@@ -141,7 +141,7 @@ class Myapp(App):
     
         Clock.schedule_interval(update, 1/30)
         Clock.schedule_interval(checkpins, 1/20)
-        Clock.schedule_interval(requer.start, 5)
+        Clock.schedule_interval(requer.start, 0.5)
         return pageslay
 
 
