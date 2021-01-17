@@ -205,7 +205,7 @@ class linechart():
 
     def update(self, data):
 
-        self.CurrentPrice = data['CurrentPrice']
+        self.CurrentPrice = time.time()#data['CurrentPrice']
 
         difference = data['ymax']-data['ymin']
         posmax = data['ymax']+difference/3
