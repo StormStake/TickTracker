@@ -183,10 +183,16 @@ class linechart():
     def update(self, data):
 
         self.CurrentPrice = data['CurrentPrice']
+
+        difference = data['ymax']-data['ymin']
+        posmax = data['ymax']+difference/3
+        negmin = data['ymin']-difference/3
+
+
         try:
             #sizing graph adding upper buffer
-            self.chart.ymax = round((data['ymax']+data['ymax']/4)/10)*10
-            self.chart.ymin = round((data['ymin']-data['ymin']/4)/10)*10
+            self.chart.ymax = round(posmax)
+            self.chart.ymin = round(negmin)
             #sizing xmax
             self.xmax = len(data['plot'])
 
