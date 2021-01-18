@@ -112,7 +112,8 @@ class helper():
             return {'plot':plot, 'ymax':ymax, 'CurrentPrice': prices[-1],'ymin': ymin, 'ticker':ticker, 'Fail': False}
 
         except KeyError:
-            return {'Fail': True}
+            self.getStockPlot(ticker, key)
+            #return {'Fail': True}
 
     #level one api
     def getCrytpoPlot(self, ticker, key):
@@ -143,4 +144,5 @@ class helper():
             return {'plot':plot, 'ymax':ymax, 'CurrentPrice': prices[-1],'ymin': ymin, 'ticker':ticker,'Fail': False}
 
         except:
-            return {'Fail': True}
+            self.getCrytpoPlot(ticker, key)
+            #return {'Fail': True}
