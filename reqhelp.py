@@ -18,13 +18,19 @@ class helper():
         self.targetResolution = 0
 
 
-        self.targets = ['W','M','Y','YTD']
-        self.timeSpans = {'Y': 31535000, 'YTD':datetime.datetime(datetime.date.today().year,1,1,0,0).timestamp(), 'M': 2628000, 'W':604800,}
+        self.targets = ['W','M','Y',]
+        self.timeSpans = {'Y': 31535000, 'M': 2628000, 'W':604800,}
         self.timeSpanTarget = 0
     #Public Methods
     def changeTimeSpan(self, span):
+        
         self.timeSpan = self.timeSpans[span]
-
+        if self.timeSpan == 'W':
+            self.resolution = 30
+        if self.timeSpan == 'M':
+            self.resolution = 'D'
+        if self.timeSpan == 'Y':
+            self.resolution = 'D'
     def nextTimeSpan(self):
         self.timeSpanTarget += 1
 
