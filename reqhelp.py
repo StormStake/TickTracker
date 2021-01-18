@@ -34,7 +34,7 @@ class helper():
     def nextTimeSpan(self):
         self.timeSpanTarget += 1
 
-        if self.timeSpanTarget == 4:
+        if self.timeSpanTarget == 3:
             self.timeSpanTarget = 0
 
         self.timeSpan = self.timeSpans[self.targets[self.timeSpanTarget]]
