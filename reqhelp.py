@@ -23,7 +23,6 @@ class helper():
         self.timeSpanTarget = 0
     #Public Methods
     def changeTimeSpan(self, span):
-        
         self.timeSpan = self.timeSpans[span]
         if self.timeSpan == 'W':
             self.resolution = 30
@@ -31,13 +30,15 @@ class helper():
             self.resolution = 'D'
         if self.timeSpan == 'Y':
             self.resolution = 'D'
+
+
     def nextTimeSpan(self):
         self.timeSpanTarget += 1
 
         if self.timeSpanTarget == 3:
             self.timeSpanTarget = 0
 
-        self.changeTimeSpan(self.targets.index(self.timeSpanTarget))
+        self.changeTimeSpan(self.timeSpans[self.targets[self.timeSpanTarget]])
 
     def ChangeResolution(self, rez):
         self.targetResolution = self.resolutions.index(rez)
