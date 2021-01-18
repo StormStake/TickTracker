@@ -46,6 +46,9 @@ class helper():
         else:
             return(False)
 
+    def getResolution(self):
+        return self.resolution
+
     def nextResolution(self):
         self.targetResolution += 1
         if self.targetResolution == 8:

@@ -12,7 +12,6 @@ from kivy.lang import Builder
 import reqhelp
 import RPi.GPIO as GPIO
 import time
-import threading
 
 
 pindt = 0
@@ -96,7 +95,7 @@ class Myapp(App):
 
                 if not data['Fail']:
                     page.getchart().update(data)
-                    page.Currentpricelabel.text = f'Current Quote:\n {str(round(page.getchart().CurrentPrice,2))}\nTime Span: {requer.getTimeSpan()}'
+                    page.Currentpricelabel.text = f'Current Quote:\n {str(round(page.getchart().CurrentPrice,2))}\nTime Span: {requer.getTimeSpan()}\nResolution: {requer.getResolution()}'
                     page.getchart().plot.points = data['plot']
 
 
