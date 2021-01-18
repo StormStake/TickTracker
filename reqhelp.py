@@ -19,7 +19,7 @@ class helper():
 
 
         self.targets = ['W','M','Y','YTD']
-        self.timeSpans = {'Y': 31536000, 'YTD':datetime.datetime(datetime.date.today().year,1,1,0,0).timestamp(), 'M': 2628000, 'W':604800,}
+        self.timeSpans = {'Y': 31535000, 'YTD':datetime.datetime(datetime.date.today().year,1,1,0,0).timestamp(), 'M': 2628000, 'W':604800,}
         self.timeSpanTarget = 0
     #Public Methods
     def changeTimeSpan(self, span):
