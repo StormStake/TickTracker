@@ -206,7 +206,7 @@ class linechart():
 
 
     def update(self, data):
-        before = time.time()
+        #before = time.time()
         self.CurrentPrice = data['CurrentPrice']
 
         difference = data['ymax']-data['ymin']
@@ -231,7 +231,7 @@ class linechart():
             self.chart.xmax = self.xmax
         except:
             pass
-        print(f'update took {time.time() - before } seconds')
+        #print(f'update took {time.time() - before } seconds')
 
 
     def Get_graph(self):
