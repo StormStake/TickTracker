@@ -38,7 +38,7 @@ class helper():
         if self.timeSpanTarget == 3:
             self.timeSpanTarget = 0
 
-        self.changeTimeSpan(self.timeSpans[self.targets[self.timeSpanTarget]])
+        self.changeTimeSpan(self.targets[self.timeSpanTarget])
 
     def ChangeResolution(self, rez):
         self.targetResolution = self.resolutions.index(rez)
